@@ -11,7 +11,7 @@ Gallagher are not React-Native experts, which means the following:
 
 1. There is no official support for this package. If you find bugs or things that don't work correctly, please file a Github Issue against the project outlining the problem, then ideally you might also submit a pull request to resolve it.
 
-2. Should you encouter encounter problems compiling or running the react-native integration (such as with Xcode, CocoaPods, yarn, npm, or other tooling), Gallagher will almost certainly **not** be able to help you.
+2. Should you encounter encounter problems compiling or running the react-native integration (such as with Xcode, CocoaPods, yarn, npm, or other tooling), Gallagher will almost certainly **not** be able to help you.
 
 3. The quality of the code in the example application is not of production quality. It does not follow React-Native best practices, style, idioms, or possess any other such qualities.  
 You should not use it as a reference for UI structure, program design, or for anything other than a learning vehicle.
@@ -22,6 +22,47 @@ You should not use it as a reference for UI structure, program design, or for an
 
 First, make sure you can build and compile the example app.  
 This will make sure your dev system is set up correctly.
+### Installation
+In your package.json file you can now add the react-native-gallagher-mobile-access as a npm package to install in three ways:
+* Using the repo from github:
+```json
+  "dependencies": {
+    "react-native-gallagher-mobile-access": "https://gitpkg.now.sh/GallagherSecurity/mobileconnectsdk-react-native-bindings/react-native-gallagher-mobile-access?main",
+  ...
+```
+* Pulling and/or copying the Gallagher repo and providing the path to the `react-native-gallagher-mobile-access` folder (remember file paths in your package.json are relative, you will need to adjust the file path accordingly to your folder structures, you also need to update the native_lib_path in the [Podspec file][react-native-gallagher-mobile-access.podspec] to match where the sdk is located)
+```json
+  "dependencies": {
+    "react-native-gallagher-mobile-access": "file:../../git/react-native-gallagher-mobile-access/react-native-gallagher-mobile-access",
+  ...
+```
+* yarn or npm
+```sh
+yarn add 'https://gitpkg.now.sh/GallagherSecurity/mobileconnectsdk-react-native-bindings/react-native-gallagher-mobile-access?main'
+npm install 'https://gitpkg.now.sh/GallagherSecurity/mobileconnectsdk-react-native-bindings/react-native-gallagher-mobile-access?main'
+```
+
+Run `yarn` or `npm install` in your root folder of your project to install the `react-native-gallagher-mobile-access` into your `node_modules`
+```sh
+yarn
+```
+
+### Android Setup (Example App)
+*Prerequisite: Static Library*
+1. Unzip the static library that you obtained from Gallagher. It should have a folder structure as follows:
+```
+com/gallagher/security/gallaghermobileaccess/*
+```
+2. Move the files that was unzipped in the previous step into a folder in the root of your project as follows:
+##### *Please note that is necessary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
+```
+example/gallagher/sdk/android
+```
+
+3. The folder structure should now be as follows:
+```
+example/gallagher/sdk/android/com/gallagher/security/gallaghermobileaccess/*
+```
 
 ### iOS Setup (Example app)
 *Prerequisite: Static Library*
@@ -36,22 +77,23 @@ iphonesimulator/
         libGallagherMobileAccess.a
 ```
 2. Move the files that was unzipped in the previous step into a folder within the example app as follows:
-##### *Please note that is nessasary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
+##### *Please note that is necessary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
 ```
-example/Gallagher/sdk/ios
+example/gallagher/sdk/ios
 ```
 
 3. The folder structure should now be as follows:
 
 ```
-example/Gallagher/sdk/ios/
+example/gallagher/sdk/ios/
     GallagherMobileAccess.swiftmodule/*.swiftmodule, swiftinterface, etc
     iphoneos/libGallagherMobileAccess.a
     iphonesimulator/libGallagherMobileAccess.a
 ```
 
 ## Building the example app
-*Prerequisite: iOS setup for the example app*
+*Prerequisite: If running in iPhone, iOS setup for the example app*
+*Prerequisite: If running on Android, Android setup for the example app*
 ```sh
 cd example
 yarn
@@ -90,44 +132,21 @@ iphonesimulator/
         libGallagherMobileAccess.a
 ```
 2. Move the files that was unzipped in the previous step into a folder in the root of your project as follows:
-##### *Please note that is nessasary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
+##### *Please note that is necessary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
 ```
-AppRootFolder/Gallagher/sdk/ios
+AppRootFolder/gallagher/sdk/ios
 ```
 
 3. The folder structure should now be as follows:
 
 ```
-AppRootFolder/Gallagher/sdk/ios/
+AppRootFolder/gallagher/sdk/ios/
     GallagherMobileAccess.swiftmodule/*.swiftmodule, swiftinterface, etc
     iphoneos/libGallagherMobileAccess.a
     iphonesimulator/libGallagherMobileAccess.a
 ```
 
-4. In your package.json file you can now add the react-native-gallagher-mobile-access as a npm package to install in three ways:
-* Using the repo from github:
-```json
-  "dependencies": {
-    "react-native-gallagher-mobile-access": "https://gitpkg.now.sh/GallagherSecurity/mobileconnectsdk-react-native-bindings/react-native-gallagher-mobile-access?main",
-  ...
-```
-* Pulling and/or copying the Gallagher repo and providing the path to the `react-native-gallagher-mobile-access` folder (remember file paths in your package.json are relative, you will need to adjust the file path accordingly to your folder structures, you also need to update the native_lib_path in the [Podspec file][react-native-gallagher-mobile-access.podspec] to match where the sdk is located)
-```json
-  "dependencies": {
-    "react-native-gallagher-mobile-access": "file:../../git/react-native-gallagher-mobile-access/react-native-gallagher-mobile-access",
-  ...
-```
-* yarn or npm
-```
-yarn add 'https://gitpkg.now.sh/GallagherSecurity/mobileconnectsdk-react-native-bindings/react-native-gallagher-mobile-access?main'
-npm install 'https://gitpkg.now.sh/GallagherSecurity/mobileconnectsdk-react-native-bindings/react-native-gallagher-mobile-access?main'
-```
-
-5. Run `yarn` or `npm install` in your root folder of your project to install the `react-native-gallagher-mobile-access` into your `node_modules`
-```sh
-yarn
-```
-6. You will need to update your `info.plist` with the following:
+4. You will need to update your `info.plist` with the following:
 ```xml
   <key>NSLocationAlwaysUsageDescription</key>
   <string>Your location is needed to detect readers using Bluetooth®. GPS is not used and your location is never shared.</string>
@@ -142,11 +161,112 @@ yarn
       <string>bluetooth-central</string>
   </array>
 ```
-7. Run `pod install` in your ios folder within your react native project to link the native dependencies
+5. Run `pod install` in your ios folder within your react native project to link the native dependencies
 ```sh
 cd ios/
 ```
-8. Now you should be able to use the `GallagherMobileAccess` within your application as below:
+6. Now you should be able to use the `GallagherMobileAccess` within your application as below:
+```js
+import GallagherMobileAccess from 'react-native-gallagher-mobile-access';
+
+GallagherMobileAccess.configure(null, null, null);
+```
+
+### Android Setup: Integrating the bindings into your own app
+*Prerequisite: Static Library*
+1. Unzip the static library that you obtained from Gallagher. It should have a folder structure as follows:
+```
+com/gallagher/security/gallaghermobileaccess/*
+```
+2. Move the files that was unzipped in the previous step into a folder in the root of your project as follows:
+##### *Please note that is necessary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
+```
+AppRootFolder/gallagher/sdk/android
+```
+
+3. The folder structure should now be as follows:
+```
+AppRootFolder/gallagher/sdk/android/com/gallagher/security/gallaghermobileaccess/*
+```
+
+4. Add the following permissions as needed to `AndroidManifest.xml` file that should be located in `android/app/src/main/AndroidManifest.xml`
+```xml
+...
+<uses-permission android:name="android.permission.INTERNET" />
+<!-- Add from here -->
+<!-- Bluetooth LE -->
+<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+<!-- Required for Android 6.0 and later when using Bluetooth LE -->
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<!-- Required for Android 10 and later when using Bluetooth LE -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!-- Required for Android 10 and later when using Bluetooth LE while the app is not on-screen -->
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+<!-- NFC -->
+<uses-permission android:name="android.permission.NFC" />
+<!-- Unlock notification wakes the screen -->
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<!-- permission to run as a foreground service to enable BLE scanning https://developer.android.com/about/versions/pie/android-9.0-changes-28 -->
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<!-- Request legacy Bluetooth permissions on older devices. -->
+<uses-permission android:name="android.permission.BLUETOOTH"
+                  android:maxSdkVersion="30" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+                  android:maxSdkVersion="30" />
+<!-- Needed only if your app looks for Bluetooth devices.
+      You must add an attribute to this permission, or declare the
+      ACCESS_FINE_LOCATION permission, depending on the results when you
+      check location usage in your app. -->
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+<!-- Needed only if your app makes the device discoverable to Bluetooth
+      devices. -->
+<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+<!-- Needed only if your app communicates with already-paired Bluetooth
+      devices. -->
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<!-- Add till here -->
+...
+```
+
+5. Add the following features to `AndroidManifest.xml` file that should be located in `android/app/src/main/AndroidManifest.xml`
+```xml
+...
+<activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+<!-- Add from here -->
+<service
+    android:name="com.gallagher.security.mobileaccess.BleBackgroundService"
+    android:exported="false"
+    android:stopWithTask="false" />
+
+<service
+    android:name="com.gallagher.security.mobileaccess.NfcBackgroundService"
+    android:enabled="true"
+    android:exported="true"
+    android:permission="android.permission.BIND_NFC_SERVICE">
+    <intent-filter>
+        <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+    </intent-filter>
+    <meta-data
+        android:name="android.nfc.cardemulation.host_apdu_service"
+        android:resource="@xml/ggl_apdu_service" />
+</service>
+<!-- Add till here -->
+...
+```
+
+6. Add the following to `build.gradle` located under `/android/build.gradle`
+```gradle
+maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+}
+// Add this below React native maven
+maven {
+    // Location of the closed-source Gallagher SDK
+    url("$rootDir/../gallagher/sdk/android")
+}
+```
+7. Now you should be able to use the `GallagherMobileAccess` within your application as below:
 ```js
 import GallagherMobileAccess from 'react-native-gallagher-mobile-access';
 
@@ -155,8 +275,9 @@ GallagherMobileAccess.configure(null, null, null);
 
 ## Usage
 
-In your `App` file, before your exported `App()` function, you will need to import and configure the SDK.  
-After which point you can enable BLE scanning and Automatic Access requests.
+**NOTE:** You are required to ask permission from the user in order to access NFC, Bluetooth and Location. Please ensure you request the correct permissions from the user using your react-native library of choice.
+
+In your `App` file, before your exported `App()` function, you will need to import and configure the SDK. After which point you can enable BLE scanning and Automatic Access requests. 
 
 Look at `App.tsx` in the example project for more information.
 
