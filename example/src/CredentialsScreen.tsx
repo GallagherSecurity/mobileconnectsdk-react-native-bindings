@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Button, View, Text, FlatList, StyleSheet, TextInput, Alert } from 'react-native';
+import { Pressable, Button, View, Text, FlatList, StyleSheet, TextInput, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -32,7 +32,7 @@ function CredentialsScreen() {
             if(!response.completed && "continuationPoint" in response) {
 
                 // intermediary step to prompt for second factor
-                navigation.push('SelectSecondFactorType');
+                navigation.push('Select Second Factor Type');
 
                 // The "SelectSecondFactorType" screen wants to tell us when the user clicked a button.
                 //
@@ -69,8 +69,8 @@ function CredentialsScreen() {
         // However, for dev/getting started purposes this is how you manually enter an invitation code,
         // to allow you to experiment with the mobile side before having built a Command Centre server/API backend integration
 
-        const [invitationCode, setInvitationCode] = React.useState("UUWM-M26T-UDT2-7TUN"); // remove hardcoded example. Invitation codes are one-shot so this one is invalid
-        const [cloudUrl, setCloudUrl] = React.useState("commandcentre-ap-southeast-2.security.gallagher.cloud");
+        const [invitationCode, setInvitationCode] = React.useState("7XBR-FE3N-QLVY-DYKT"); // remove hardcoded example. Invitation codes are one-shot so this one is invalid
+        const [cloudUrl, setCloudUrl] = React.useState("ci-commandcentre.security.gallagher.io");
 
         return (
             <View style={styles.plainView}>
@@ -90,8 +90,12 @@ function CredentialsScreen() {
         return (
             <View style={styles.plainView}>
                 <Text>Select Second Factor Type:</Text>
-                <Button style={styles.listItem} title="Fingerprint or Face ID" onPress={() => selectSecondFactorResolution('fingerprintOrFaceId')} />
-                <Button style={styles.listItem} title="Pin/Passcode" onPress={() => selectSecondFactorResolution('pin')} />
+                <View style={styles.buttonContainer}>
+                    <Button title="Fingerprint or Face ID" onPress={() => selectSecondFactorResolution('fingerprintOrFaceId')} />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button title="Pin/Passcode" onPress={() => selectSecondFactorResolution('pin')} />
+                </View>
             </View>
         );
     }
@@ -112,7 +116,7 @@ function CredentialsScreen() {
         } catch (err) {
             console.log("getCredentials failed! " + err);
         }
-    }, []);    
+    }, []);
 
     const renderItem = ({ item }) => {
         return <CredentialListItem id={item.id} title={item.facilityName} />
@@ -121,7 +125,7 @@ function CredentialsScreen() {
         React.useLayoutEffect(() => {
             navigation.setOptions({
                 headerRight: () => (
-                    <Button onPress={() => navigation.push('AddCredential')} title="Add" />
+                    <Button onPress={() => navigation.push('Add Credential')} title="Add" />
                 ),
             });
         }, [navigation]);
@@ -137,8 +141,8 @@ function CredentialsScreen() {
         <NavigationContainer independent="true">
             <Stack.Navigator>
                 <Stack.Screen name="Credentials" component={CredentialsList} />
-                <Stack.Screen name="AddCredential" component={AddCredential} />
-                <Stack.Screen name="SelectSecondFactorType" component={SelectSecondFactorType} />
+                <Stack.Screen name="Add Credential" component={AddCredential} />
+                <Stack.Screen name="Select Second Factor Type" component={SelectSecondFactorType} />
             </Stack.Navigator>
         </NavigationContainer>
     );
@@ -159,7 +163,9 @@ const styles = StyleSheet.create({
         paddingLeft: 8,
         paddingRight: 8,
     },
-
+    buttonContainer: {
+        margin: 8,
+    },
     listItem: {
         height: 64,
         backgroundColor: 'white',

@@ -13,14 +13,43 @@ function connectToReader(id) {
     //GallagherMobileAccess.
 }
 
+function displayMessageForSdkState(sdkState: String): String {
+    // this is not exhaustive, just the ones you are most likely to hit
+    switch(sdkState) {
+        case "errorNoCredentials": return "Please register a credential to scan for readers"
+        case "bleErrorUnauthorized": return "App is not authorized to use bluetooth"
+        case "bleErrorLocationServiceDisabled": return "Location Services are disabled"
+
+        case "bleErrorNoLocationPermission": return "App doesn't have Location Permissions (required for Bluetooth)"
+        // this is not neccessarily an error. Lots of people only want to have access when the app is visible on-screen
+        case "bleErrorNoBackgroundLocationPermission": return "(Optional) App doesn't have Background Location Permission"
+        
+        // Note: you may not wish to copy these sample messages as-is. 
+        // For example, saying "may still use nfc" when NFC is also disabled, isn't correct
+        case "bleErrorDisabled": return "Bluetooth is disabled (may still use nfc)"
+        case "nfcErrorDisabled": return "NFC is disabled (may still use bluetooth)"
+        default: return sdkState // no friendly text for this one
+    }
+}
+
 function ReadersScreen() {
+    const [messages, setMessages] = useState([]);
     const [readers, setReaders] = useState([]);
+    
+    const updateSdkStates = function(sdkStates: [String]) {
+        const mapped = sdkStates.map(s => ({ id: s, message: displayMessageForSdkState(s) }))
+        setMessages(mapped)
+    }
 
     useEffect(() => {
         console.log('ReadersScreen load');
         console.log(GallagherMobileAccessEvents.addListener);
+
+        GallagherMobileAccess.getStates().then(s => updateSdkStates(s))
+
         const sdkSub = GallagherMobileAccessEvents.addListener('sdkStateChanged', (data: SdkStateChanged) => {
             console.log('isScanning: ' + data.isScanning + ' sdkStates: '+JSON.stringify(data.states));
+            updateSdkStates(data.states)
         });
 
         const subscription = GallagherMobileAccessEvents.addListener('readerUpdated', (data: ReaderUpdated) => {
@@ -93,6 +122,12 @@ function ReadersScreen() {
         }
     }, []);
 
+    const ReaderMessageItem = ({ message }) => (
+        <View style={styles.listItem}>
+            <Text style={styles.titleText}>{message}</Text>
+        </View>
+    )
+
     const ReaderListItem = ({ reader }) => (
         <TouchableOpacity onPress={() => connectToReader(reader.id)}>
             <View style={styles.listItem}>
@@ -110,12 +145,22 @@ function ReadersScreen() {
         </TouchableOpacity>
     )
 
-    const renderItem = ({ item }) => {
-        return <ReaderListItem reader={item} />
-    }
     const ReadersList = ({ navigation }) => {
-        return (<View style={{ flex: 1 }}>
-            <FlatList contentContainerStyle={{ flexGrow: 1 }} data={readers} renderItem={renderItem} keyExtractor={item => item.id} />
+        const renderMessage = ({ item }) => {
+            return <ReaderMessageItem message={item.message} />
+        }
+        const renderItem = ({ item }) => {
+            return <ReaderListItem reader={item} />
+        }
+
+        return (<View style={{ flex: 0 }}>
+            <FlatList contentContainerStyle={{ flexGrow: 1 }} data={messages} renderItem={renderMessage} keyExtractor={item => item.id} />
+            {(readers.length>0) ?
+                <>
+                    <View style={{height: 1, backgroundColor: 'black'}} />
+                    <FlatList contentContainerStyle={{ flexGrow: 1 }} data={readers} renderItem={renderItem} keyExtractor={item => item.id} />
+                </>
+            : null}
         </View>);
     };
 

@@ -48,13 +48,13 @@ yarn
 ```
 
 ### Android Setup (Example App)
-*Prerequisite: Static Library*
-1. Unzip the static library that you obtained from Gallagher. It should have a folder structure as follows:
+*Prerequisite: Android Library*
+1. Unzip the library that you obtained from Gallagher. It should have a folder structure as follows:
 ```
 com/gallagher/security/gallaghermobileaccess/*
 ```
-2. Move the files that was unzipped in the previous step into a folder in the root of your project as follows:
-##### *Please note that is necessary for the react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the static library files*
+2. Move the files that were unzipped in the previous step into a folder in the root of your project as follows:
+##### *Please note that is necessary for react-native autolinking to take place since the bindings will be installed into your node_modules and needs to know where to find the library files*
 ```
 example/gallagher/sdk/android
 ```
@@ -65,7 +65,7 @@ example/gallagher/sdk/android/com/gallagher/security/gallaghermobileaccess/*
 ```
 
 ### iOS Setup (Example app)
-*Prerequisite: Static Library*
+*Prerequisite: iOS Static Library*
 
 1. Unzip the static library that you obtained from Gallagher. It should have a folder structure as follows:
 ```
