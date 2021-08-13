@@ -69,8 +69,8 @@ function CredentialsScreen() {
         // However, for dev/getting started purposes this is how you manually enter an invitation code,
         // to allow you to experiment with the mobile side before having built a Command Centre server/API backend integration
 
-        const [invitationCode, setInvitationCode] = React.useState("7XBR-FE3N-QLVY-DYKT"); // remove hardcoded example. Invitation codes are one-shot so this one is invalid
-        const [cloudUrl, setCloudUrl] = React.useState("ci-commandcentre.security.gallagher.io");
+        const [invitationCode, setInvitationCode] = React.useState("UUWM-M26T-UDT2-7TUN"); // remove hardcoded example. Invitation codes are one-shot so this one is invalid
+        const [cloudUrl, setCloudUrl] = React.useState("commandcentre-ap-southeast-2.security.gallagher.cloud");
 
         return (
             <View style={styles.plainView}>
