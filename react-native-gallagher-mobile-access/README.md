@@ -91,6 +91,14 @@ example/gallagher/sdk/ios/
     iphonesimulator/libGallagherMobileAccess.a
 ```
 
+4. Install CocoaPods if you don't already have it, then run pod install.
+
+```
+cd example/ios
+pod install
+cd ../.. # ready for npx react-native run-ios
+```
+
 ## Building the example app
 *Prerequisite: If running in iPhone, iOS setup for the example app*
 *Prerequisite: If running on Android, Android setup for the example app*
