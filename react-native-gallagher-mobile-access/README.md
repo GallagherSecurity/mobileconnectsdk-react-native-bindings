@@ -99,7 +99,7 @@ pod install
 cd ../.. # ready for npx react-native run-ios
 ```
 
-## Building the example app
+## Building and running the example app
 *Prerequisite: If running in iPhone, iOS setup for the example app*
 *Prerequisite: If running on Android, Android setup for the example app*
 ```sh
@@ -127,7 +127,14 @@ You should then follow the [Developer Guide][ios-dev-guide] for the native SDK, 
 
 *Note: the ios developer guide mentions linking libraries, and the RxSwift dependency. You do not need to do any of this for the React Native integration, as it is managed by CocoaPods*
 
-### iOS Setup: Integrating the bindings into your own app
+**Troubleshooting the example app:**
+
+iOS: If you run npx react-native run-ios and the simulator appears but just sits with a message saying "Loading from Metro..." check AppDelegate.m in the example source code.  
+There is a function `sourceURLForBridge` that has some code to override the host address for finding the react native dev server. Check that it's commented out, or if you have multiple NIC's, you may need to uncomment it and put the correct IP address in.
+
+----
+
+## iOS Setup: Integrating the bindings into your own app
 *Prerequisite: Static Library*
 
 1. Unzip the static library that you obtained from Gallagher. It should have a folder structure as follows:
@@ -180,7 +187,7 @@ import GallagherMobileAccess from 'react-native-gallagher-mobile-access';
 GallagherMobileAccess.configure(null, null, null);
 ```
 
-### Android Setup: Integrating the bindings into your own app
+## Android Setup: Integrating the bindings into your own app
 *Prerequisite: Static Library*
 1. Unzip the static library that you obtained from Gallagher. It should have a folder structure as follows:
 ```

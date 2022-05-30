@@ -55,7 +55,7 @@ static void InitializeFlipper(UIApplication *application) {
 {
 #if DEBUG
   // uncomment to override the RN packager address if you've got multiple NICs and it guesses wrong
-  return [NSURL URLWithString:@"http://192.168.20.4:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.example.reactnativegallaghermobileaccess"];
+//  return [NSURL URLWithString:@"http://192.168.20.12:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=com.example.reactnativegallaghermobileaccess"];
   
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
